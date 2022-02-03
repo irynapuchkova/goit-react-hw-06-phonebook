@@ -4,7 +4,14 @@ import { connect } from "react-redux";
 import * as actions from "../../redux/contacts/contacts-actions";
 import { Form, Input, BtnSubmit } from "./ContactForm.styled";
 
-function ContactForm({ onSubmit }) {
+// contacts: [
+//       { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
+//       { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
+//       { id: "id-3", name: "Eden Clements", number: "645-17-79" },
+//       { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
+// ],
+
+function ContactForm({ onSubmit, contacts }) {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
 
@@ -21,6 +28,11 @@ function ContactForm({ onSubmit }) {
 
   const onFormSubmit = (e) => {
     e.preventDefault();
+
+    const existedNames = contacts.map((contact) => contact.name);
+    if (existedNames.includes(contact.name)) {
+      return alert(`${contact.name} is already in contacts`);
+    }
 
     onSubmit(contact);
     resetState();
@@ -54,7 +66,7 @@ function ContactForm({ onSubmit }) {
 }
 
 const mapStateToProps = (state) => ({
-  items: state.contacts.items,
+  contacts: state.contacts.items,
   filter: state.contacts.filter,
 });
 
@@ -66,4 +78,11 @@ export default connect(mapStateToProps, mapDispachToProps)(ContactForm);
 
 ContactForm.propTypes = {
   onSubmit: PropTypes.func,
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ),
 };
