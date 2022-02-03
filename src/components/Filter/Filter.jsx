@@ -1,9 +1,18 @@
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import selectors from "../../redux/contacts/selectors";
 import * as actions from "../../redux/contacts/contacts-actions";
 import { Title, Input, Wrapper } from "./Filter.styled";
 
-function Filter({ value, handleFilter }) {
+function Filter() {
+  const value = useSelector(selectors.filter);
+  const dispatch = useDispatch();
+
+  const handleFilter = ({ currentTarget: { value } }) => {
+    dispatch(actions.filter(value));
+  };
+
   return (
     <Wrapper>
       <Title>Find contacts by name</Title>
@@ -17,15 +26,7 @@ function Filter({ value, handleFilter }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  value: state.contacts.filter,
-});
-
-const mapDispachToProps = (dispatch) => ({
-  handleFilter: (e) => dispatch(actions.filter(e.currentTarget.value)),
-});
-
-export default connect(mapStateToProps, mapDispachToProps)(Filter);
+export default Filter;
 
 Filter.propTypes = {
   value: PropTypes.string,
