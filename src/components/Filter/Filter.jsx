@@ -1,7 +1,9 @@
-import PropTypes from 'prop-types';
-import { Title, Input, Wrapper } from './Filter.styled';
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import * as actions from "../../redux/contacts/contacts-actions";
+import { Title, Input, Wrapper } from "./Filter.styled";
 
-export default function Filter({ value, onChange }) {
+function Filter({ value, handleFilter }) {
   return (
     <Wrapper>
       <Title>Find contacts by name</Title>
@@ -9,13 +11,23 @@ export default function Filter({ value, onChange }) {
         type="text"
         placeholder="Filter"
         value={value}
-        onChange={onChange}
+        onChange={handleFilter}
       />
     </Wrapper>
   );
 }
 
+const mapStateToProps = (state) => ({
+  value: state.contacts.filter,
+});
+
+const mapDispachToProps = (dispatch) => ({
+  handleFilter: (e) => dispatch(actions.filter(e.currentTarget.value)),
+});
+
+export default connect(mapStateToProps, mapDispachToProps)(Filter);
+
 Filter.propTypes = {
   value: PropTypes.string,
-  onChange: PropTypes.func,
+  handleFilter: PropTypes.func,
 };
