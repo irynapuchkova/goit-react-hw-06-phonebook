@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 
-import selectors from "../../redux/contacts/selectors";
+import selectors from "../../redux/contacts/contacts-selectors";
 import * as actions from "../../redux/contacts/contacts-actions";
 import { Title, Input, Wrapper } from "./Filter.styled";
 

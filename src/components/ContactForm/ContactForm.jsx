@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import selectors from "../../redux/contacts/selectors";
+import selectors from "../../redux/contacts/contacts-selectors";
 import * as actions from "../../redux/contacts/contacts-actions";
 
 import { Form, Input, BtnSubmit } from "./ContactForm.styled";
@@ -10,10 +10,10 @@ import { Form, Input, BtnSubmit } from "./ContactForm.styled";
 function ContactForm() {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
-  const contact = { name, number };
-
   const contacts = useSelector(selectors.contacts);
   const dispatch = useDispatch();
+
+  const contact = { name, number };
 
   const handleInputValue = ({ currentTarget: { name, value } }) => {
     name === "name" ? setName(value) : setNumber(value);
